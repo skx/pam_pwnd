@@ -5,6 +5,16 @@ password being used for authentication has been listed in the
 [have I been pwnded](https://haveibeenpwned.com/) database.
 
 
+## Sponsorship
+
+The development of this module was sponsored by three individuals who made charitable donations.  (Anonymous primarily because I didn't ask for permission to name them publicly.)
+
+If you wish to "sponsor this" please [email me](https://steve.kemp.fi/) a reciept of your donation and I'll add your name here.
+
+I support the [RNLI](https://en.wikipedia.org/wiki/Royal_National_Lifeboat_Institution), but feel free to pick whatever you like.
+
+
+
 ## Compilation
 
 These are the the dependencies I expect:
@@ -56,6 +66,16 @@ At this point I can test the module hasn't broken my system by reseting the `sud
      [sudo] password for skx:
      root@frodo:~#
 
+
+### Installation Paranoia
+
+If things are horribly broken it might be that you'll be unable to
+run `sudo` to fix them.
+
+For the duration of any installation you should ensure you have an
+open terminal/connection with `root` privileges.
+
+That's just common-sense, I hope!
 
 
 

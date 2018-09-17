@@ -9,7 +9,9 @@ password being used for authentication has been listed in the
 
 The development of this module was sponsored by three individuals who made charitable donations.  (Anonymous primarily because I didn't ask for permission to name them publicly.)
 
-If you wish to "sponsor this" please [email me](https://steve.kemp.fi/) a reciept of your donation and I'll add your name here.  I support the [RNLI](https://en.wikipedia.org/wiki/Royal_National_Lifeboat_Institution), but feel free to pick whatever you like.  Otherwise use as you like, take the code, fork it, improve it, and feel free to report bugs, or feature-suggestions :)
+If you wish to "sponsor this" software, and be listed here, just [email me](https://steve.kemp.fi/) a reciept of your donation.  I support the [RNLI](https://en.wikipedia.org/wiki/Royal_National_Lifeboat_Institution), but feel free to pick whatever charity you wish.
+
+That code is released under the [BSD-license](LICENSE) so you can fork it, improve it, use it, and enjoy it!  Feel free to report bugs, or feature-suggestions on the [issue-page](https://github.com/skx/pam_pwnd/issues).
 
 
 
@@ -17,12 +19,12 @@ If you wish to "sponsor this" please [email me](https://steve.kemp.fi/) a reciep
 
 These are the the dependencies I expect:
 
-* For fetching a remote URI:
+* For fetching a remote URI we use `libcurl`:
   * `apt-get install libcurl4-gnutls-dev`
-* For pam:
+* For compiling PAM modules you'll need the appropriate development package:
   * `apt-get install libpam0g-dev`
 
-Assuming you have everything appropriate installed then you should be able to compile the code via a simple `make`:
+Assuming you have the dependencies installed then compilation should only require a simple `make`:
 
     $ make
     gcc -fPIC -c pam_pwnd.c -lpam -lpam_misc -lpamc

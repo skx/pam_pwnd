@@ -1,1 +1,2 @@
-pam_pwnd.so
+*.o
+*.so

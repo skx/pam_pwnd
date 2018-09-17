@@ -17,8 +17,6 @@ If you wish to "sponsor this" please [email me](https://steve.kemp.fi/) a reciep
 
 These are the the dependencies I expect:
 
-* For SSL (SHA1 hash calculation)
-  * `apt-get install libssl1.0-dev`
 * For fetching a remote URI:
   * `apt-get install libcurl4-gnutls-dev`
 * For pam:

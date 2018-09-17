@@ -19,10 +19,11 @@ format:
 #
 # Make the module
 #
-pam_pwnd.so: Makefile pam_pwnd.c pwn_chk.c
+pam_pwnd.so: Makefile pam_pwnd.c pwn_chk.c sha1.c sha1.h
 	gcc -fPIC -c pam_pwnd.c -lpam -lpam_misc -lpamc
-	gcc -fPIC -c pwn_chk.c  -lcurl -lssl -lcrypto
-	ld -x --shared -o pam_pwnd.so pam_pwnd.o pwn_chk.o -lcurl -lssl -lcrypto -lpam -lpam_misc -lpamc
+	gcc -fPIC -c pwn_chk.c  -lcurl
+	gcc -fPIC -c sha1.c
+	ld -x --shared -o pam_pwnd.so pam_pwnd.o pwn_chk.o sha1.o -lcurl -lpam -lpam_misc -lpamc
 
 
 #

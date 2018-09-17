@@ -16,7 +16,8 @@
 #include <sys/types.h>
 #include <pwd.h>
 #include <syslog.h>
-#include <openssl/sha.h>
+
+#include "sha1.h"
 
 /*
  * The lookup of the password is handled via this external function.
@@ -74,18 +75,23 @@ PAM_EXTERN int pam_sm_authenticate(pam_handle_t * pamh, int flags, int argc, con
     /*
      * (SHA1) Hash the password.
      */
-    unsigned char hash[SHA_DIGEST_LENGTH];
-    SHA1((const unsigned char*)userPasswd, strlen(userPasswd), hash);
+    unsigned char hash[20];
+    SHA1_CTX ctx;
+    SHA1Init(&ctx);
+    SHA1Update(&ctx, (unsigned char*)userPasswd,strlen(userPasswd));
+    SHA1Final(hash, &ctx);
 
     /*
      * Convert to a hex-string.
      */
     char buf[41] = {'\0'};
 
+    /*
+     * NOTE: We upper-case the string here, but we also repeat that
+     * later on.  Just because.
+     */
     for (int i = 0; i < 20; i++)
-    {
-        sprintf(buf, "%s%02x", buf, hash[i]);
-    }
+        sprintf(buf, "%s%02X", buf, hash[i]);
 
 
     /*

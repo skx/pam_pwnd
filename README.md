@@ -26,8 +26,9 @@ Assuming you have everything appropriate installed then you should be able to co
 
     $ make
     gcc -fPIC -c pam_pwnd.c -lpam -lpam_misc -lpamc
-    gcc -fPIC -c pwn_chk.c  -lcurl -lssl -lcrypto
-    ld -x --shared -o pam_pwnd.so pam_pwnd.o pwn_chk.o -lcurl -lssl -lcrypto -lpam -lpam_misc -lpamc
+    gcc -fPIC -c pwn_chk.c  -lcurl
+    gcc -fPIC -c sha1.c
+    ld -x --shared -o pam_pwnd.so pam_pwnd.o pwn_chk.o sha1.o -lcurl -lpam -lpam_misc -lpamc
 
 
 

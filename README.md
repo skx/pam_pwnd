@@ -2,16 +2,14 @@
 
 This repository contains a simple PAM module for testing whether a
 password being used for authentication has been listed in the
-[have I been pwnded](https://haveibeenpwned.com/) database.
+[have I been pwned](https://haveibeenpwned.com/) database.
 
 
 ## Sponsorship
 
 The development of this module was sponsored by three individuals who made charitable donations.  (Anonymous primarily because I didn't ask for permission to name them publicly.)
 
-If you wish to "sponsor this" please [email me](https://steve.kemp.fi/) a reciept of your donation and I'll add your name here.
-
-I support the [RNLI](https://en.wikipedia.org/wiki/Royal_National_Lifeboat_Institution), but feel free to pick whatever you like.
+If you wish to "sponsor this" please [email me](https://steve.kemp.fi/) a reciept of your donation and I'll add your name here.  I support the [RNLI](https://en.wikipedia.org/wiki/Royal_National_Lifeboat_Institution), but feel free to pick whatever you like.
 
 
 

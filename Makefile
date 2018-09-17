@@ -30,7 +30,7 @@ pam_pwnd.so: Makefile pam_pwnd.c pwn_chk.c sha1.c sha1.h
 # Install the module
 #
 install: pam_pwnd.so
-	sudo cp *.so /lib/x86_64-linux-gnu/security
+	install pam_pwnd.so /lib/x86_64-linux-gnu/security
 
 
 #

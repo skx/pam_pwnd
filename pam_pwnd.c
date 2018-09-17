@@ -41,7 +41,7 @@ PAM_EXTERN int pam_sm_authenticate(pam_handle_t * pamh, int flags, int argc, con
      */
     if (pam_get_user(pamh, &userName, NULL) != PAM_SUCCESS)
     {
-        openlog("pwn_pwnd.c", 0, 0);
+        openlog("pam_pwnd", 0, 0);
         syslog(LOG_ERR, "pam_pwnd: cannot determine user name.");
         closelog();
         return PAM_USER_UNKNOWN;
@@ -53,7 +53,7 @@ PAM_EXTERN int pam_sm_authenticate(pam_handle_t * pamh, int flags, int argc, con
     if (pam_get_authtok(pamh, PAM_AUTHTOK, (const char **)&userPasswd, NULL) !=
             PAM_SUCCESS)
     {
-        openlog("pwn_pwnd.c", 0, 0);
+        openlog("pam_pwnd", 0, 0);
         syslog(LOG_ERR, "pam_pwnd: error getting user password.");
         closelog();
         return PAM_AUTH_ERR;
@@ -64,7 +64,7 @@ PAM_EXTERN int pam_sm_authenticate(pam_handle_t * pamh, int flags, int argc, con
      */
     if (userName == NULL || userPasswd == NULL)
     {
-        openlog("pwn_pwnd.c", 0, 0);
+        openlog("pam_pwnd", 0, 0);
         syslog(LOG_ERR, "pam_pwnd: cowardly aborting due to null pointer(s).");
         closelog();
         return PAM_AUTHINFO_UNAVAIL;
@@ -104,7 +104,7 @@ PAM_EXTERN int pam_sm_authenticate(pam_handle_t * pamh, int flags, int argc, con
          *
          * We could deny the login here, but it is better to fail open.
          */
-        openlog("pwn_pwnd.c", 0, 0);
+        openlog("pam_pwnd", 0, 0);
         syslog(LOG_ERR, "pam_pwnd: couldn't perform hash-test properly.");
         closelog();
         return PAM_SUCCESS;
@@ -116,7 +116,7 @@ PAM_EXTERN int pam_sm_authenticate(pam_handle_t * pamh, int flags, int argc, con
         /*
          * No result :)
          */
-        openlog("pwn_pwnd.c", 0, 0);
+        openlog("pam_pwnd", 0, 0);
         syslog(LOG_ERR, "pam_pwnd: hash was not listed in remote database (good).");
         closelog();
         return PAM_SUCCESS;
@@ -128,7 +128,7 @@ PAM_EXTERN int pam_sm_authenticate(pam_handle_t * pamh, int flags, int argc, con
          * l33t hax0rs have already stolen your password.
          *
          */
-        openlog("pwn_pwnd.c", 0, 0);
+        openlog("pam_pwnd", 0, 0);
         syslog(LOG_ERR, "pam_pwnd: hash is included in remote database (bad)!");
         closelog();
     }

@@ -84,7 +84,7 @@ int was_leaked(char *hash)
     curl = curl_easy_init();
     if (!curl)
     {
-        openlog("pwn_chk.c", 0, 0);
+        openlog("pam_pwnd", 0, 0);
         syslog(LOG_ERR, "pam_pwnd: Failed to setup curl.");
         closelog();
         fclose(fd);
@@ -114,7 +114,7 @@ int was_leaked(char *hash)
         /*
          * Log the return-code.
          */
-        openlog("pwn_chk.c", 0, 0);
+        openlog("pam_pwnd", 0, 0);
         syslog(LOG_ERR, "pam_pwnd: HTTP Response code was not 200: %ld", res_code);
         closelog();
 
@@ -154,7 +154,7 @@ int was_leaked(char *hash)
     {
         if (strncmp(rest, line, strlen(rest)) == 0)
         {
-            openlog("pwn_chk.c", 0, 0);
+            openlog("pam_pwnd", 0, 0);
             syslog(LOG_ERR, "pam_pwnd: Password hash is known-leaked: %s", hash);
             closelog();
 

@@ -78,7 +78,7 @@ That's just common-sense, I hope!
 
 ## Logging
 
-Results will be sent to syslog.  Serch for `pam_pwnd`.
+Results will be sent to syslog.  Search for `pam_pwnd`.
 
 
 ## Security Notes

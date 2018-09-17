@@ -11,7 +11,7 @@ The development of this module was sponsored by three individuals who made chari
 
 If you wish to "sponsor this" software, and be listed here, just [email me](https://steve.kemp.fi/) a reciept of your donation.  I support the [RNLI](https://en.wikipedia.org/wiki/Royal_National_Lifeboat_Institution), but feel free to pick whatever charity you wish.
 
-That code is released under the [BSD-license](LICENSE) so you can fork it, improve it, use it, and enjoy it!  Feel free to report bugs, or feature-suggestions on the [issue-page](https://github.com/skx/pam_pwnd/issues).
+The code is released under the [BSD-license](LICENSE) so you can fork it, improve it, use it, and enjoy it!  Feel free to report bugs, or feature-suggestions on the [issue-page](https://github.com/skx/pam_pwnd/issues).
 
 
 

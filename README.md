@@ -17,7 +17,7 @@ The code is released under the [BSD-license](LICENSE) so you can fork it, improv
 
 ## Compilation
 
-These are the the dependencies I expect:
+These are the the dependencies I expect you would need for compiling the project:
 
 * For fetching a remote URI we use `libcurl`:
   * `apt-get install libcurl4-gnutls-dev`

@@ -78,7 +78,7 @@ PAM_EXTERN int pam_sm_authenticate(pam_handle_t * pamh, int flags, int argc, con
     unsigned char hash[20];
     SHA1_CTX ctx;
     SHA1Init(&ctx);
-    SHA1Update(&ctx, (unsigned char*)userPasswd,strlen(userPasswd));
+    SHA1Update(&ctx, (unsigned char*)userPasswd, strlen(userPasswd));
     SHA1Final(hash, &ctx);
 
     /*

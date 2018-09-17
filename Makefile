@@ -13,7 +13,7 @@ all: pam_pwnd.so
 # Format our code consistently.
 #
 format:
-	astyle --style=allman -A1 --indent=spaces=4   --break-blocks --pad-oper --pad-header --unpad-paren --max-code-length=200 *.c
+	astyle --style=allman -A1 --indent=spaces=4   --break-blocks --pad-oper --pad-header --unpad-paren --max-code-length=200 *.c *.h
 
 
 #

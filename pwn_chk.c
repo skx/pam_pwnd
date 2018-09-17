@@ -82,6 +82,7 @@ int was_leaked(char *hash)
      * Initialize curl.
      */
     curl = curl_easy_init();
+
     if (!curl)
     {
         openlog("pam_pwnd", 0, 0);
@@ -108,6 +109,7 @@ int was_leaked(char *hash)
      * Did we receive an error from the remote call?
      */
     curl_easy_getinfo(curl, CURLINFO_RESPONSE_CODE, &res_code);
+
     if (!(res_code == 200) && res != CURLE_ABORTED_BY_CALLBACK)
     {
 

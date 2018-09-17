@@ -206,22 +206,28 @@ void SHA1Update(
     uint32_t j;
 
     j = context->count[0];
+
     if ((context->count[0] += len << 3) < j)
         context->count[1]++;
+
     context->count[1] += (len >> 29);
     j = (j >> 3) & 63;
+
     if ((j + len) > 63)
     {
         memcpy(&context->buffer[j], data, (i = 64 - j));
         SHA1Transform(context->state, context->buffer);
+
         for (; i + 63 < len; i += 64)
         {
             SHA1Transform(context->state, &data[i]);
         }
+
         j = 0;
     }
     else
         i = 0;
+
     memcpy(&context->buffer[j], &data[i], len - i);
 }
 
@@ -254,26 +260,34 @@ void SHA1Final(
         int j;
 
         for (j = 0; j < 4; t >>= 8, j++)
-            *--fcp = (unsigned char) t}
+            * --fcp = (unsigned char) t
+        }
+
 #else
+
     for (i = 0; i < 8; i++)
     {
-        finalcount[i] = (unsigned char) ((context->count[(i >= 4 ? 0 : 1)] >> ((3 - (i & 3)) * 8)) & 255);      /* Endian independent */
+        finalcount[i] = (unsigned char)((context->count[(i >= 4 ? 0 : 1)] >> ((3 - (i & 3)) * 8)) & 255);       /* Endian independent */
     }
+
 #endif
     c = 0200;
     SHA1Update(context, &c, 1);
+
     while ((context->count[0] & 504) != 448)
     {
         c = 0000;
         SHA1Update(context, &c, 1);
     }
+
     SHA1Update(context, finalcount, 8); /* Should cause a SHA1Transform() */
+
     for (i = 0; i < 20; i++)
     {
         digest[i] = (unsigned char)
-            ((context->state[i >> 2] >> ((3 - (i & 3)) * 8)) & 255);
+                    ((context->state[i >> 2] >> ((3 - (i & 3)) * 8)) & 255);
     }
+
     /* Wipe variables */
     memset(context, '\0', sizeof(*context));
     memset(&finalcount, '\0', sizeof(finalcount));
@@ -288,8 +302,10 @@ void SHA1(
     unsigned int ii;
 
     SHA1Init(&ctx);
-    for (ii=0; ii<len; ii+=1)
+
+    for (ii = 0; ii < len; ii += 1)
         SHA1Update(&ctx, (const unsigned char*)str + ii, 1);
+
     SHA1Final((unsigned char *)hash_out, &ctx);
     hash_out[20] = '\0';
 }

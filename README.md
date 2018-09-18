@@ -9,7 +9,7 @@ password being used for authentication has been listed in the
 
 The development of this module was sponsored by three individuals who made charitable donations.  (Anonymous primarily because I didn't ask for permission to name them publicly.)
 
-If you wish to "sponsor this" software, and be listed here, just [email me](https://steve.kemp.fi/) a reciept of your donation.  I support the [RNLI](https://en.wikipedia.org/wiki/Royal_National_Lifeboat_Institution), but feel free to pick whatever charity you wish.
+If you wish to "sponsor this" software, and be listed here, just [email me](https://steve.kemp.fi/) a receipt of your donation.  I support the [RNLI](https://en.wikipedia.org/wiki/Royal_National_Lifeboat_Institution), but feel free to pick whatever charity you wish.
 
 The code is released under the [BSD-license](LICENSE) so you can fork it, improve it, use it, and enjoy it!  Feel free to report bugs, or feature-suggestions on the [issue-page](https://github.com/skx/pam_pwnd/issues).
 
@@ -48,7 +48,7 @@ In my case I'm using SSH keys for authentication, so I'm only concerned with ens
 
     auth   required   pam_pwnd.so  try_first_pass
 
-The complete file then reads:
+The complete file, on an Ubuntu system, might then look like this:
 
       #%PAM-1.0
       session    required   pam_env.so readenv=1 user_readenv=0
@@ -58,12 +58,27 @@ The complete file then reads:
       @include common-session-noninteractive
       auth   required   pam_pwnd.so  try_first_pass
 
-At this point I can test the module hasn't broken my system by reseting the `sudo` cache, and re-authenticating:
+Upon the "stretch" release of Debian GNU/Linux the complete file might instead look like this:
+
+      #%PAM-1.0
+
+      @include common-auth
+      @include common-account
+      @include common-session-noninteractive
+      auth   required   pam_pwnd.so  try_first_pass
+
+Regardless of what your file looks like, once you've added the reference to `pam_pwnd.so`, you should then be ready to test the module hasn't broken your system by reseting the `sudo` cache, and re-authenticating:
 
      frodo ~ $ sudo -k
      frodo ~ $ sudo su -
      [sudo] password for skx:
      root@frodo:~#
+
+Assuming nothing is broken you should:
+
+* Be prompted for your password, only once, as expected.
+* Receive your root-prompt.
+
 
 
 ### Installation Paranoia

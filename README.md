@@ -1,4 +1,4 @@
-[![Travis CI](https://img.shields.io/travis/skx/pam_pwnd/master.svg?style=flat-square)](https://travis-ci.org/skx/pam_pwn)
+[![Travis CI](https://img.shields.io/travis/skx/pam_pwnd/master.svg?style=flat-square)](https://travis-ci.org/skx/pam_pwnd)
 [![license](https://img.shields.io/github/license/skx/pam_pwnd.svg)](https://github.com/skx/pam_pwnd/blob/master/LICENSE)
 [![Release](https://img.shields.io/github/release/skx/pam_pwnd.svg)](https://github.com/skx/pam_pwnd/releases/latest)
 

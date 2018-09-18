@@ -22,7 +22,8 @@ extern int was_leaked(char *hash);
  * We provide an input and ensure that the output hash matches
  * the given output.
  */
-typedef struct sha1_test_case {
+typedef struct sha1_test_case
+{
     /*
      * Input to the test-case.
      */
@@ -41,7 +42,8 @@ typedef struct sha1_test_case {
  *
  * We provide an input and ensure that the output result matches.
  */
-typedef struct pwn_test_case {
+typedef struct pwn_test_case
+{
     /*
      * Input to the test-case.
      */
@@ -59,12 +61,14 @@ typedef struct pwn_test_case {
  * Test that our SHA1-implementation returns somewhat reasonable
  * results.
  */
-void test_sha1() {
+void test_sha1()
+{
 
     /*
      * Our test-cases - contain the expected input and output
      */
-    sha1_test_case input[]  = {
+    sha1_test_case input[]  =
+    {
         { "steve", "9ce5770b3bb4b2a1d59be2d97e34379cd192299f"},
         { "ssh.pass", "f9ecf6396e3b442df3dae72b81fec784d2b2900d" },
         { "ssh.pasS", "276ed889f7d9a00e24db1c07579f5b78f19ba204"},
@@ -78,8 +82,10 @@ void test_sha1() {
     /*
      * For each case.
      */
-    size_t cases = sizeof(input)/sizeof(input[0]);
-    for( size_t i = 0; i < cases; i++ ) {
+    size_t cases = sizeof(input) / sizeof(input[0]);
+
+    for (size_t i = 0; i < cases; i++)
+    {
 
         /*
          * Calculate the SHA1-hash of the input, and ensure
@@ -100,13 +106,16 @@ void test_sha1() {
             sprintf(result, "%s%02x", result, hash[i]);
 
 
-        if ( strcmp( input[i].output, result ) != 0 ) {
-            printf("%d - FAIL: Test input '%s' gave hash '%s' not '%s'\n",
-                   i+1, input[i].input, result, input[i].output );
+        if (strcmp(input[i].output, result) != 0)
+        {
+            printf("%zu - FAIL: Test input '%s' gave hash '%s' not '%s'\n",
+                   i + 1, input[i].input, result, input[i].output);
             exit(1);
-        } else {
-            printf("%d - OK: Test input '%s' gave expected hash '%s'\n",
-                   i+1, input[i].input, input[i].output );
+        }
+        else
+        {
+            printf("%zu - OK: Test input '%s' gave expected hash '%s'\n",
+                   i + 1, input[i].input, input[i].output);
         }
     }
 }
@@ -121,7 +130,8 @@ void test_pwn_lookup()
     /*
      * Plain-text passwords to lookup, and expected result.
      */
-    pwn_test_case input[]  = {
+    pwn_test_case input[]  =
+    {
 
         /* Listed in the DB*/
         { "steve", 1},
@@ -138,8 +148,10 @@ void test_pwn_lookup()
     /*
      * For each case.
      */
-    size_t cases = sizeof(input)/sizeof(input[0]);
-    for( size_t i = 0; i < cases; i++ ) {
+    size_t cases = sizeof(input) / sizeof(input[0]);
+
+    for (size_t i = 0; i < cases; i++)
+    {
 
         /*
          * Calculate the SHA1-hash of the input.
@@ -164,13 +176,16 @@ void test_pwn_lookup()
          */
         int found = was_leaked(result);
 
-        if ( found != input[i].result ) {
-            printf("%d - FAIL: Test input '%s' gave '%d' not '%d'\n",
-                   i+1, input[i].input, found, input[i].result );
+        if (found != input[i].result)
+        {
+            printf("%zu - FAIL: Test input '%s' gave '%d' not '%d'\n",
+                   i + 1, input[i].input, found, input[i].result);
             exit(1);
-        } else {
-            printf("%d - OK: Test input '%s' gave expected result.\n",
-                   i+1, input[i].input);
+        }
+        else
+        {
+            printf("%zu - OK: Test input '%s' gave expected result.\n",
+                   i + 1, input[i].input);
         }
     }
 }
@@ -180,7 +195,8 @@ void test_pwn_lookup()
 /*
  * Entry-Point.
  */
-int main( int argc, char *argv[] ) {
+int main(int argc, char *argv[])
+{
 
     /*
      * Test hash.
@@ -193,5 +209,5 @@ int main( int argc, char *argv[] ) {
     test_pwn_lookup();
 
 
-    exit( 0 );
+    exit(0);
 }

@@ -2,6 +2,8 @@
 # Simple makefile for our project.
 #
 
+CFLAGS=-std=c99 -Wall -Werror
+
 
 #
 # Make our PAM-module by default.
@@ -20,9 +22,9 @@ format:
 # Make the module
 #
 pam_pwnd.so: Makefile pam_pwnd.c pwn_chk.c sha1.c sha1.h
-	gcc -fPIC -c pam_pwnd.c -lpam -lpam_misc -lpamc
-	gcc -fPIC -c pwn_chk.c  -lcurl
-	gcc -fPIC -c sha1.c
+	gcc ${CFLAGS} -fPIC -c pam_pwnd.c -lpam -lpam_misc -lpamc
+	gcc ${CFLAGS} -fPIC -c pwn_chk.c  -lcurl
+	gcc ${CFLAGS} -fPIC -c sha1.c
 	ld -x --shared -o pam_pwnd.so pam_pwnd.o pwn_chk.o sha1.o -lcurl -lpam -lpam_misc -lpamc
 
 
@@ -44,7 +46,7 @@ clean:
 # Build a simple test-script
 #
 pam_test: pam_test.c sha1.c sha1.h pwn_chk.c
-	gcc -o pam_test pam_test.c pwn_chk.c sha1.c  -lcurl
+	gcc ${CFLAGS} -o pam_test pam_test.c pwn_chk.c sha1.c  -lcurl
 
 #
 # Run the test-cases.

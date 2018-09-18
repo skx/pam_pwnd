@@ -1,3 +1,7 @@
+[![Travis CI](https://img.shields.io/travis/skx/pam_pwn/master.svg?style=flat-square)](https://travis-ci.org/skx/pam_pwn)
+[![license](https://img.shields.io/github/license/skx/pam_pwn.svg)](https://github.com/skx/pam_pwn/blob/master/LICENSE)
+[![Release](https://img.shields.io/github/release/skx/pam_pwn.svg)](https://github.com/skx/pam_pwn/releases/latest)
+
 # pam_pwnd
 
 This repository contains a simple PAM module for testing whether a

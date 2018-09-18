@@ -1,0 +1,20 @@
+sudo: required
+dist: trusty
+install:
+- export CC="gcc-4.8"
+- ${CC} --version
+addons:
+  apt:
+    packages:
+    - libcurl4-gnutls-dev
+    - libpam0g-dev
+language: c
+compiler:
+  - gcc
+script:
+  - make
+  - make test
+
+before_install:
+ - sudo apt-get update -qq
+ - sudo apt-get install -qq libcurl4-gnutls-dev libpam0g-dev

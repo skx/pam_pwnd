@@ -37,6 +37,17 @@ int was_leaked(char *hash)
 {
 
     /*
+     * Sanity-check that our input is valid.
+     */
+    if (hash == NULL  || strlen(hash) != 40)
+    {
+        openlog("pam_pwnd", 0, 0);
+        syslog(LOG_ERR, "pam_pwnd: Invalid input for was_leaked(%s).", hash);
+        closelog();
+        return -1;
+    }
+
+    /*
      * We're going to make a request via Curl, so we need a curl
      * object/structure for interfacing with that library.
      */
@@ -44,23 +55,29 @@ int was_leaked(char *hash)
     CURLcode res;
 
     /*
-     * For the HaveIBeenPwnd library we need to make a request with the
+     * For the HaveIBeenPwnd API we need to make a request with the
      * first five characters of the SHA1-hash, and then look for the
      * rest of the hash in the response.
+     *
+     * Extract the first five characters into one buffer, and the rest
+     * into another.
      */
     char start[6] = {'\0'};
-    char rest[48] = {'\0'};
     strncpy(start, hash, 5);
-    strcpy(rest, hash + 5);
+    char rest[40] = {'\0'};
+    strncpy(rest,  hash + 5, sizeof(rest) - 1);
 
     /*
-     * Our hash-segments should be upper-cased.
+     * Our hash-prefix should be upper-cased.
      */
     for (unsigned int i = 0; i < strlen(start); i++)
     {
         start[i] = toupper(start[i]);
     }
 
+    /*
+     * As should our suffix.
+     */
     for (unsigned int i = 0; i < strlen(rest); i++)
     {
         rest[i] = toupper(rest[i]);

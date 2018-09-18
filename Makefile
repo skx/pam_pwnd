@@ -39,5 +39,15 @@ install: pam_pwnd.so
 clean:
 	rm ./main *.o *.so || true
 
-test: main
-	./main password
+
+#
+# Build a simple test-script
+#
+pam_test: pam_test.c sha1.c sha1.h pwn_chk.c
+	gcc -o pam_test pam_test.c pwn_chk.c sha1.c  -lcurl
+
+#
+# Run the test-cases.
+#
+test: pam_test
+	./pam_test

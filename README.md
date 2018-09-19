@@ -83,38 +83,33 @@ Assuming nothing is broken you should:
 * Be prompted for your password, only once, as expected.
 * Receive your root-prompt.
 
+If things are horribly broken, such that you get segfaults or failures from _this_ module then you will probably be unable to run `sudo` to fix them, so for the duration of any installation you should ensure you have an open terminal/connection with `root` privileges.
 
+The module will log results to syslog, search for `pam_pwnd` to see them.
 
-### Installation Paranoia
-
-If things are horribly broken it might be that you'll be unable to
-run `sudo` to fix them.
-
-For the duration of any installation you should ensure you have an
-open terminal/connection with `root` privileges.
-
-That's just common-sense, I hope!
-
-
-## Logging
-
-Results will be sent to syslog.  Search for `pam_pwnd`.
 
 
 ## Security Notes
 
 The code makes a single outgoing HTTP-request for each authentication
-request.  If this request fails then we default to failing-open, allowing
-the authentication to proceed.
+request:
 
-(We assume other modules will actually validate the password, if we
-allowed a failure to invoke the API we'd deny all sudo-operations in
-the event your DNS, networking, or similar things were broken.)
+* The outgoing request contains the first five characters of your __hashed__ password.
+   * i.e. If you password is "secret" it is hashed to `e5e9fa1ba31ecd1ae84f75caaa474f3a663f05f4`, then an outgoing request is made with the characters `e5e9f`.
 
-There are zero memory allocations in this module, which should ensure
-that we don't leak anything.  Instead we generate a single temporary
-file to hold the results of our HTTP-response, and that temporary file
-is cleaned up after use.
+If the API-lookup request fails then we default to failing-open, allowing the authentication to proceed.   (We assume other modules will actually validate the password, if we allowed a failure to invoke the API we'd deny all PAM-based operations in the event your DNS, networking, or similar things were broken.)
+
+There are zero memory allocations in this module, which should ensure that we don't leak anything.  Instead we generate a single temporary file to hold the results of our HTTP-response, and that temporary file is cleaned up after use.
+
+
+## Testing Notes
+
+There is a simple test-driver included in this project which exercises some of
+the code, it is not designed to be a complete test-case, nor to perform exhaustive testing.
+
+If you're planning to submit pull-requests that change the code you should ensure the tests pass even with your additions:
+
+    $ make test
 
 
 ## Feedback

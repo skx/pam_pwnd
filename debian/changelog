@@ -1,0 +1,5 @@
+libpam-pwnd (0.1) unstable; urgency=low
+
+  * Initial package.
+
+ -- Steve Kemp <steve@steve.org.uk>  Mon, 17 Sep 2018 19:19:19 +0200

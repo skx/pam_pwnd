@@ -111,7 +111,7 @@ PAM_EXTERN int pam_sm_authenticate(pam_handle_t * pamh, int flags, int argc, con
          * We could deny the login here, but it is better to fail open.
          */
         openlog("pam_pwnd", 0, 0);
-        syslog(LOG_ERR, "pam_pwnd: couldn't perform hash-test properly.");
+        syslog(LOG_ERR, "pam_pwnd: couldn't perform hash-test for %s properly.", userName);
         closelog();
         return PAM_SUCCESS;
 
@@ -123,7 +123,7 @@ PAM_EXTERN int pam_sm_authenticate(pam_handle_t * pamh, int flags, int argc, con
          * No result :)
          */
         openlog("pam_pwnd", 0, 0);
-        syslog(LOG_ERR, "pam_pwnd: hash was not listed in remote database (good).");
+        syslog(LOG_ERR, "pam_pwnd: hash for %s was not listed in remote database (good).", userName);
         closelog();
         return PAM_SUCCESS;
     }
@@ -135,7 +135,7 @@ PAM_EXTERN int pam_sm_authenticate(pam_handle_t * pamh, int flags, int argc, con
          *
          */
         openlog("pam_pwnd", 0, 0);
-        syslog(LOG_ERR, "pam_pwnd: hash is included in remote database (bad)!");
+        syslog(LOG_ERR, "pam_pwnd: hash for %s is included in remote database (bad)!", userName);
         closelog();
     }
 

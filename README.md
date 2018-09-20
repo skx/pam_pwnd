@@ -8,6 +8,8 @@ This repository contains a simple PAM module for testing whether a
 password being used for authentication has been listed in the
 [have I been pwned](https://haveibeenpwned.com/) database.
 
+Note that in the documentation here we focus upon ensuring that a password used for `sudo` has not been compromised, but PAM-modules can be used for many purposes, from handling SSH-access, to permitting HTTP-based authentication.  There is nothing `sudo`-specific about our code so this module can be useful in many contexts.
+
 
 ## Sponsorship
 
@@ -21,7 +23,7 @@ The code is released under the [BSD-license](LICENSE) so you can fork it, improv
 
 ## Compilation
 
-These are the the dependencies I expect you would need for compiling the project:
+These are the dependencies I expect you would need for compiling the project:
 
 * For fetching a remote URI we use `libcurl`:
   * `apt-get install libcurl4-gnutls-dev`
@@ -36,19 +38,26 @@ Assuming you have the dependencies installed then compilation should only requir
     gcc -fPIC -c sha1.c
     ld -x --shared -o pam_pwnd.so pam_pwnd.o pwn_chk.o sha1.o -lcurl -lpam -lpam_misc -lpamc
 
+For completeness you can also run the basic test-cases included in the repository, but note that to do that you will require network-access:
+
+    $ make test
+    ./pam_test
+    ..
+
+(This might be an issue if you run the tests as part of a build-process upon a CI/CD system which doesn't permit outgoing network access.)
+
 
 
 ## Installation & Configuration
 
 
-Once you have compiled the code you should copy the resulting file `pam_pwnd.so` to the appropriate PAM-module directory upon your system.  In my case that means running this command:
+Once you have compiled the code you should copy the resulting file `pam_pwnd.so` to the appropriate PAM-directory upon your system.  In my case that means running this command:
 
     sudo install pam_pwnd.so  /lib/x86_64-linux-gnu/security/
 
+The final step is to enable the module, by editing the appropriate PAM configuration file.
 
-The final step is to enable the module, by editing the PAM configuration file.
-
-In my case I'm using SSH keys for authentication, so I'm only concerned with ensuring that no known-bad passwords are used with sudo.  I append the following line to `/etc/pamd.d/sudo`:
+In my case I'm using SSH keys for authentication, and I'm only concerned with ensuring that no known-bad passwords are used with `sudo`.  I append the following line to `/etc/pamd.d/sudo`:
 
     auth   required   pam_pwnd.so  try_first_pass
 
@@ -62,7 +71,7 @@ The complete file, on an Ubuntu system, might then look like this:
       @include common-session-noninteractive
       auth   required   pam_pwnd.so  try_first_pass
 
-Upon the "stretch" release of Debian GNU/Linux the complete file might instead look like this:
+Upon the "stretch" release of Debian GNU/Linux the file has these contents:
 
       #%PAM-1.0
 
@@ -80,12 +89,14 @@ Regardless of what your file looks like, once you've added the reference to `pam
 
 Assuming nothing is broken you should:
 
-* Be prompted for your password, only once, as expected.
+* Be prompted for your password.
+  * Only once.
 * Receive your root-prompt.
+* See the results of the module logged to syslog.
 
 If things are horribly broken, such that you get segfaults or failures from _this_ module then you will probably be unable to run `sudo` to fix them, so for the duration of any installation you should ensure you have an open terminal/connection with `root` privileges.
 
-The module will log results to syslog, search for `pam_pwnd` to see them.
+The module will log its results to syslog, search for `pam_pwnd` to see them.
 
 
 
@@ -95,7 +106,8 @@ The code makes a single outgoing HTTP-request for each authentication
 request:
 
 * The outgoing request contains the first five characters of your __hashed__ password.
-   * i.e. If you password is "secret" it is hashed to `e5e9fa1ba31ecd1ae84f75caaa474f3a663f05f4`, then an outgoing request is made with the characters `e5e9f`.
+   * i.e. If you password is "secret" it is first hashed to `e5e9fa1ba31ecd1ae84f75caaa474f3a663f05f4`.
+   * Then an outgoing request is made with the characters `e5e9f`.
 
 If the API-lookup request fails then we default to failing-open, allowing the authentication to proceed.   (We assume other modules will actually validate the password, if we allowed a failure to invoke the API we'd deny all PAM-based operations in the event your DNS, networking, or similar things were broken.)
 

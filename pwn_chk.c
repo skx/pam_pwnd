@@ -13,6 +13,7 @@
 #include <curl/curl.h>
 #include <string.h>
 #include <syslog.h>
+#include <sys/stat.h>
 #include <ctype.h>
 
 /*
@@ -93,8 +94,11 @@ int was_leaked(char *hash)
              "https://api.pwnedpasswords.com/range/%s", start);
 
     /*
-     * Create a temporary file to hold the response.
+     * Create a temporary file to hold the response - note that we
+     * setup our umask first such that the file will be readable
+     * only by the owner.
      */
+    umask(077);
     FILE * fd = tmpfile();
 
     /*

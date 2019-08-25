@@ -1,0 +1,10 @@
+on: pull_request
+name: Pull Request
+jobs:
+  execute:
+    name: Execute
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@master
+    - name: Execute
+      uses: skx/github-action-tester@master

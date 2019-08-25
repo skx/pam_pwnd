@@ -2,7 +2,7 @@
 # Simple makefile for our project.
 #
 
-CFLAGS=-std=c99 -Wall -Werror
+CFLAGS=-std=c99 -Wall
 
 
 #
